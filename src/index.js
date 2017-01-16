@@ -48,17 +48,25 @@ StackedDeckTrainer.prototype.eventHandlers.onSessionEnded = function (sessionEnd
 /**
  * override intentHandlers to map intent handling functions.
  */
-TidePooler.prototype.intentHandlers = {
-    "OneshotDeckIntent": function (intent, session, response) {
-        handleOneshotDeckRequest(intent, session, response);
+StackedDeckTrainer.prototype.intentHandlers = {
+    "OneshotCardIntent": function (intent, session, response) {
+        handleOneshotCardRequest(intent, session, response);
+    },
+
+    "OneshotDPositionIntent": function (intent, session, response) {
+        handleOneshotPositionRequest(intent, session, response);
     },
 
     "DialogDeckIntent": function (intent, session, response) {
-        // Determine if this turn is for card, for position, or an error.
+        // Determine if this turn is for deck, for card, for position, or an error.
         // We could be passed  s with values, no slots, slots with no value.
+        var deckSlot = intent.slots.Deck;
         var cardSlot = intent.slots.Card;
         var positionSlot = intent.slots.Position;
-        if (cardSlot && cardSlot.value) {
+
+        if (deckSlot && deckSlot.value) {
+            handleDeckDialogRequest(intent, session, response);
+        } else if (cardSlot && cardSlot.value) {
             handleCardDialogRequest(intent, session, response);
         } else if (positionSlot && positionSlot.value) {
             handlePositionDialogRequest(intent, session, response);
@@ -67,8 +75,8 @@ TidePooler.prototype.intentHandlers = {
         }
     },
 
-    "SupportedDecksIntent": function (intent, session, response) {
-        handleSupportedDecksRequest(intent, session, response);
+    "AvailableDecksIntent": function (intent, session, response) {
+        handleAvailableDecksRequest(intent, session, response);
     },
 
     "AMAZON.HelpIntent": function (intent, session, response) {
@@ -86,54 +94,259 @@ TidePooler.prototype.intentHandlers = {
     }
 };
 
-// -------------------------- TidePooler Domain Specific Business Logic --------------------------
+// -------------------------- Stacked Deck Trainer Domain Specific Business Logic --------------------------
 
 // set decks
 var DECKS = {
     'new deck': {
-      name:"The New Deck Stack",
+      name:"New Deck",
       order:[
-
+        "Ace of Clubs",
+        "Two of Clubs",
+        "Three of Clubs",
+        "Four of Clubs",
+        "Five of Clubs",
+        "Six of Clubs",
+        "Seven of Clubs",
+        "Eight of Clubs",
+        "Nine of Clubs",
+        "Ten of Clubs",
+        "Jack of Clubs",
+        "Queen of Clubs",
+        "King of Clubs",
+        "Ace of Hearts",
+        "Two of Hearts",
+        "Three of Hearts",
+        "Four of Hearts",
+        "Five of Hearts",
+        "Six of Hearts",
+        "Seven of Hearts",
+        "Eight of Hearts",
+        "Nine of Hearts",
+        "Ten of Hearts",
+        "Jack of Hearts",
+        "Queen of Hearts",
+        "King of Hearts",
+        "Ace of Diamonds",
+        "Two of Diamonds",
+        "Three of Diamonds",
+        "Four of Diamonds",
+        "Five of Diamonds",
+        "Six of Diamonds",
+        "Seven of Diamonds",
+        "Eight of Diamonds",
+        "Nine of Diamonds",
+        "Ten of Diamonds",
+        "Jack of Diamonds",
+        "Queen of Diamonds",
+        "King of Diamonds",
+        "Ace of Spades",
+        "Two of Spades",
+        "Three of Spades",
+        "Four of Spades",
+        "Five of Spades",
+        "Six of Spades",
+        "Seven of Spades",
+        "Eight of Spades",
+        "Nine of Spades",
+        "Ten of Spades",
+        "Jack of Spades",
+        "Queen of Spades",
+        "King of Spades"
       ]
     },
     'tamariz': {
-      name:"The Tamariz Stack",
+      name:"Tamariz",
       order:[
-
+        "Ace of Clubs",
+        "Two of Clubs",
+        "Three of Clubs",
+        "Four of Clubs",
+        "Five of Clubs",
+        "Six of Clubs",
+        "Seven of Clubs",
+        "Eight of Clubs",
+        "Nine of Clubs",
+        "Ten of Clubs",
+        "Jack of Clubs",
+        "Queen of Clubs",
+        "King of Clubs",
+        "Ace of Hearts",
+        "Two of Hearts",
+        "Three of Hearts",
+        "Four of Hearts",
+        "Five of Hearts",
+        "Six of Hearts",
+        "Seven of Hearts",
+        "Eight of Hearts",
+        "Nine of Hearts",
+        "Ten of Hearts",
+        "Jack of Hearts",
+        "Queen of Hearts",
+        "King of Hearts",
+        "Ace of Diamonds",
+        "Two of Diamonds",
+        "Three of Diamonds",
+        "Four of Diamonds",
+        "Five of Diamonds",
+        "Six of Diamonds",
+        "Seven of Diamonds",
+        "Eight of Diamonds",
+        "Nine of Diamonds",
+        "Ten of Diamonds",
+        "Jack of Diamonds",
+        "Queen of Diamonds",
+        "King of Diamonds",
+        "Ace of Spades",
+        "Two of Spades",
+        "Three of Spades",
+        "Four of Spades",
+        "Five of Spades",
+        "Six of Spades",
+        "Seven of Spades",
+        "Eight of Spades",
+        "Nine of Spades",
+        "Ten of Spades",
+        "Jack of Spades",
+        "Queen of Spades",
+        "King of Spades"
       ]
     },
     'aronson': {
-      name:"The Aronson Stack",
+      name:"Aronson",
       order:[
-
+        "Ace of Clubs",
+        "Two of Clubs",
+        "Three of Clubs",
+        "Four of Clubs",
+        "Five of Clubs",
+        "Six of Clubs",
+        "Seven of Clubs",
+        "Eight of Clubs",
+        "Nine of Clubs",
+        "Ten of Clubs",
+        "Jack of Clubs",
+        "Queen of Clubs",
+        "King of Clubs",
+        "Ace of Hearts",
+        "Two of Hearts",
+        "Three of Hearts",
+        "Four of Hearts",
+        "Five of Hearts",
+        "Six of Hearts",
+        "Seven of Hearts",
+        "Eight of Hearts",
+        "Nine of Hearts",
+        "Ten of Hearts",
+        "Jack of Hearts",
+        "Queen of Hearts",
+        "King of Hearts",
+        "Ace of Diamonds",
+        "Two of Diamonds",
+        "Three of Diamonds",
+        "Four of Diamonds",
+        "Five of Diamonds",
+        "Six of Diamonds",
+        "Seven of Diamonds",
+        "Eight of Diamonds",
+        "Nine of Diamonds",
+        "Ten of Diamonds",
+        "Jack of Diamonds",
+        "Queen of Diamonds",
+        "King of Diamonds",
+        "Ace of Spades",
+        "Two of Spades",
+        "Three of Spades",
+        "Four of Spades",
+        "Five of Spades",
+        "Six of Spades",
+        "Seven of Spades",
+        "Eight of Spades",
+        "Nine of Spades",
+        "Ten of Spades",
+        "Jack of Spades",
+        "Queen of Spades",
+        "King of Spades"
       ]
     },
     'maigret': {
-      name:"The Maigret Stack",
+      name:"Maigret",
       order:[
-
+        "Ace of Clubs",
+        "Two of Clubs",
+        "Three of Clubs",
+        "Four of Clubs",
+        "Five of Clubs",
+        "Six of Clubs",
+        "Seven of Clubs",
+        "Eight of Clubs",
+        "Nine of Clubs",
+        "Ten of Clubs",
+        "Jack of Clubs",
+        "Queen of Clubs",
+        "King of Clubs",
+        "Ace of Hearts",
+        "Two of Hearts",
+        "Three of Hearts",
+        "Four of Hearts",
+        "Five of Hearts",
+        "Six of Hearts",
+        "Seven of Hearts",
+        "Eight of Hearts",
+        "Nine of Hearts",
+        "Ten of Hearts",
+        "Jack of Hearts",
+        "Queen of Hearts",
+        "King of Hearts",
+        "Ace of Diamonds",
+        "Two of Diamonds",
+        "Three of Diamonds",
+        "Four of Diamonds",
+        "Five of Diamonds",
+        "Six of Diamonds",
+        "Seven of Diamonds",
+        "Eight of Diamonds",
+        "Nine of Diamonds",
+        "Ten of Diamonds",
+        "Jack of Diamonds",
+        "Queen of Diamonds",
+        "King of Diamonds",
+        "Ace of Spades",
+        "Two of Spades",
+        "Three of Spades",
+        "Four of Spades",
+        "Five of Spades",
+        "Six of Spades",
+        "Seven of Spades",
+        "Eight of Spades",
+        "Nine of Spades",
+        "Ten of Spades",
+        "Jack of Spades",
+        "Queen of Spades",
+        "King of Spades"
       ]
     },
 };
 
 function handleWelcomeRequest(response) {
-    var whichDeckPrompt = "Which deck would you like to learn?",
+    var whichDeckPrompt = "Which deck do we want to use?",
         speechOutput = {
-            speech: "<speak>Welcome to the Stacked Deck Trainer."
+            speech: "<speak>Welcome to the Stacked Deck Trainer.",
                 + whichDeckPrompt
                 + "</speak>",
             type: AlexaSkill.speechOutputType.SSML
         },
         repromptOutput = {
-            speech: "You can ask for the position of specific card "
-                + "or the name of card at a specific position"
-                + "from one of the stacked decks"
-                + "or you can simply open Stacked Deck Trainer and ask a question like, "
-                + "where is the Ace of Hearts in a Tameriz stack? "
-                + "or, name the card at the twenty-seventh position."
-                + "You can set a default stack by saying, set stack to Aronson."
-                + "You can also ask what stack am I using."
-                + "For a list of currently supported stacked decks, ask what decks are supported. "
+            speech: "Once you tell me what stack we will be using, ",
+                + "you can ask for the position of specific card in the deck ",
+                + "or the name of card at a specific position ",
+                + "or switch stacked decks.",
+                + "You can also ask what stack am I using.",
+                + "Also, you can simply open Stacked Deck Trainer and ask a question like, ",
+                + "where is the Ace of Hearts in a Tamariz stack? ",
+                + "or, name the card at the twenty-seventh position.",
+                + "You can set a default stack by saying, set stack to Aronson.",
+                + "For a list of currently available stacked decks, ask what decks are available. ",
                 + whichDeckPrompt,
             type: AlexaSkill.speechOutputType.PLAIN_TEXT
         };
@@ -142,26 +355,24 @@ function handleWelcomeRequest(response) {
 }
 
 function handleHelpRequest(response) {
-    var repromptText = "Which deck would you like to learn?";
-    var speechOutput = "You can ask for the position of specific card "
-        + "or the name of card at a specific position"
-        + "from one of the stacked decks"
-        + "or you can simply open Stacked Deck Trainer and ask a question like, "
-        + "where is the Ace of Hearts in a Tameriz deck? "
-        + "or, name the card at the twenty-seventh position."
-        + "You can set a default stack by saying, set stack to Aronson."
-        + "You can also ask what stack am I using."
-        + "For a list of currently supported stacked decks, ask what decks are supported. "
-        + "Or you can say exit. "
+    var repromptText = "Which deck do we want to use?";
+    var speechOutput = "You can ask for the position of specific card ",
+        + "or the name of card at a specific position",
+        + "from one of the stacked decks",
+        + "or you can simply open Stacked Deck Trainer and ask a question like, ",
+        + "where is the Ace of Hearts in a Tamariz deck? ",
+        + "or, name the card at the twenty-seventh position.",
+        + "For a list of currently available stacked decks, ask what decks are available. ",
+        + "Or you can say exit. ",
         + repromptText;
 
     response.ask(speechOutput, repromptText);
 }
 
 /**
- * Handles the case where the user asked or for, or is otherwise being with supported decks
+ * Handles the case where the user asked or for, or is otherwise being with available decks
  */
-function handleSupportedDecksRequest(intent, session, response) {
+function handleAvailableDecksRequest(intent, session, response) {
     // get city re-prompt
     var repromptText = "Which deck do we want to use?";
     var speechOutput = "Currently, I know the order of these stacked decks: " + getAllDecksText()
@@ -171,16 +382,49 @@ function handleSupportedDecksRequest(intent, session, response) {
 }
 
 /**
+ * Handles the dialog step where the user provides a deck
+ */
+function handleDeckDialogRequest(intent, session, response) {
+
+    var stackedDeck = getDeckFromIntent(intent, false),
+        repromptText,
+        speechOutput;
+    if (stackedDeck.error) {
+        repromptText = "Currently, I know the order of these stacked decks: " + getAllDecksText()
+            + "Which deck do we want to use?";
+        // if we received a value for the incorrect city, repeat it to the user, otherwise we received an empty slot
+        speechOutput = "I'm sorry, I don't know that stack. " + repromptText
+        response.ask(speechOutput, repromptText);
+        return;
+    }
+
+    // if we don't have a card yet, go to card. If we have a card, we perform the final request
+    if (session.attributes.card) {
+        getFinalCardResponse(stackedDeck, session.attributes.card, response);
+    // if we don't have a position yet, go to position. If we have a position, we perform the final request
+    } else if (session.attributes.position) {
+        getFinalPositionResponse(stackedDeck, session.attributes.position, response);
+    } else {
+        // set deck in session and prompt for card or position
+        session.attributes.deck = stackedDeck;
+        speechOutput = "From the " + stackedDeck.name +" stack, name a position or name of card.";
+        repromptText = "Name a position or name of card for the " + stackedDeck.name + " stack.";
+
+        response.ask(speechOutput, repromptText);
+    }
+}
+
+/**
  * Handles the dialog step where the user provides a card name
  */
 function handleCardDialogRequest(intent, session, response) {
 
-    var cardName = getDeckFromIntent(intent, false),
+    var card = getCardFromIntent(intent, false),
         repromptText,
         speechOutput;
 
-    if (!cardName) {
-        repromptText = "Please try again saying a card name, for example, Ace of Spades. "
+    if (!card) {
+        repromptText = "Please try again saying a card name, for example, Ace of Spades. ",
             + "Which card are you looking for?";
         speechOutput = "I'm sorry, I didn't understand that card name. " + repromptText;
 
@@ -190,12 +434,12 @@ function handleCardDialogRequest(intent, session, response) {
 
     // if we don't have a deck yet, go to deck. If we have a deck, we perform the final request
     if (session.attributes.deck) {
-        getFinalDeckResponse(session.attributes.deck, cardName, "card", response);
+        getFinalCardResponse(session.attributes.deck, card, response);
     } else {
-        // set city in session and prompt for date
-        session.attributes.deck = stackedDeck;
+        // set card in session and prompt for deck
+        session.attributes.card = card;
         speechOutput = "For which deck?";
-        repromptText = "Which card in " + stackedDeck + " are you looking for?";
+        repromptText = "Which deck are you looking in?";
 
         response.ask(speechOutput, repromptText);
     }
@@ -211,7 +455,7 @@ function handlePositionDialogRequest(intent, session, response) {
         speechOutput;
 
     if (!cardPosition) {
-        repromptText = "Please try again saying a card position, for example, the 22nd position. "
+        repromptText = "Please try again saying a card position, for example, the 22nd position. ",
             + "Which position are you looking for?";
         speechOutput = "I'm sorry, I didn't understand that card position. " + repromptText;
 
@@ -221,12 +465,12 @@ function handlePositionDialogRequest(intent, session, response) {
 
     // if we don't have a deck yet, go to deck. If we have a deck, we perform the final request
     if (session.attributes.deck) {
-        getFinalDeckResponse(session.attributes.deck, cardPosition, "position", response);
+        getFinalDeckResponse(session.attributes.deck, cardPosition, response);
     } else {
         // set city in session and prompt for date
-        session.attributes.deck = stackedDeck;
+        session.attributes.position = cardPosition;
         speechOutput = "For which deck?";
-        repromptText = "Which position in " + stackedDeck + " are you looking for?";
+        repromptText = "Which deck are you looking in?";
 
         response.ask(speechOutput, repromptText);
     }
@@ -242,60 +486,231 @@ function handlePositionDialogRequest(intent, session, response) {
 function handleNoSlotDialogRequest(intent, session, response) {
     if (session.attributes.deck) {
         // get card name/position re-prompt
-        var repromptText = "Please try again saying a card name, like the Queen of Hearts, "
+        var repromptText = "Please try again saying a card name, like the Queen of Hearts, ",
           + "or a card position, like the 11th position.";
         var speechOutput = repromptText;
 
         response.ask(speechOutput, repromptText);
     } else {
         // get deck re-prompt
-        handleSupportedDecksRequest(intent, session, response);
+        handleAvailableDecksRequest(intent, session, response);
     }
 }
 
 /**
- * This handles the one-shot interaction, where the user utters a phrase like:
- * 'Alexa, open Tide Pooler and get tide information for Seattle on Saturday'.
+ * This handles a one-shot interaction, where the user utters a phrase like:
+ * 'Alexa, open Stacked Deck Trainer and get card for the Tamariz'.
  * If there is an error in a slot, this will guide the user to the dialog approach.
  */
-function handleOneshotDeckRequest(intent, session, response) {
+function handleOneshotCardRequest(intent, session, response) {
 
     // Determine deck, using default if none provided
     var stackedDeck = getDeckFromIntent(intent, true),
         repromptText,
         speechOutput;
     if (stackedDeck.error) {
-        // invalid city. move to the dialog
+        // invalid deck. move to the dialog
         var repromptText = "Currently, I know the order of these stacked decks: " + getAllDecksText()
             + "Which deck do we want to use?";
         // if we received a value for the incorrect deck, repeat it to the user, otherwise we received an empty slot
-        speechOutput = cityStation.city ? "I'm sorry, I don't have any data for " + stackedDeck.name + ". " + repromptText : repromptText;
+        speechOutput = "I'm sorry, I don't know that stack. " + repromptText;
 
         response.ask(speechOutput, repromptText);
         return;
     }
 
-    // Determine custom card or position
-    var cardName = getCardFromIntent(intent);
-    if (!date) {
-        // Invalid date. set city in session and prompt for date
-        session.attributes.city = cityStation;
-        repromptText = "Please try again saying a day of the week, for example, Saturday. "
-            + "For which date would you like tide information?";
-        speechOutput = "I'm sorry, I didn't understand that date. " + repromptText;
+    // Determine custom card
+    var card = getCardFromIntent(intent);
+    if (!card) {
+        // Invalid date. set card in session
+        session.attributes.card = card;
+        repromptText = "Please try again saying a card name, for example, Ten of Diamonds. ",
+            + "Which card do we want to locate?";
+        speechOutput = "I'm sorry, I didn't understand that card. " + repromptText;
 
         response.ask(speechOutput, repromptText);
         return;
     }
 
     // all slots filled, either from the user or by default values. Move to final request
-    getFinalDeckResponse(deck, info, cardOrPosition, response);
+    getFinalCardResponse(deck, card, response);
+}
+
+/**
+ * This handles the one-shot interaction, where the user utters a phrase like:
+ * 'Alexa, open Stacked Deck Trainer and get card for the Tamariz'.
+ * If there is an error in a slot, this will guide the user to the dialog approach.
+ */
+function handleOneshotPositionRequest(intent, session, response) {
+
+    // Determine deck, using default if none provided
+    var stackedDeck = getDeckFromIntent(intent, true),
+        repromptText,
+        speechOutput;
+    if (stackedDeck.error) {
+        // invalid deck. move to the dialog
+        var repromptText = "Currently, I know the order of these stacked decks: " + getAllDecksText()
+            + "Which deck do we want to use?";
+        // if we received a value for the incorrect deck, repeat it to the user, otherwise we received an empty slot
+        speechOutput = "I'm sorry, I don't know that stack. " + repromptText;
+
+        response.ask(speechOutput, repromptText);
+        return;
+    }
+
+    // Determine custom position
+    var cardPosition = getPositionFromIntent(intent);
+    if (!cardPosition) {
+        // Invalid position. set position in session
+        session.attributes.card = cardName;
+        repromptText = "Please try again saying a card location, for example, the 32nd position ",
+            + "What location do we want to discover?";
+        speechOutput = "I'm sorry, I didn't understand that location. " + repromptText;
+
+        response.ask(speechOutput, repromptText);
+        return;
+    }
+
+    // all slots filled, either from the user or by default values. Move to final request
+    getFinalPositionResponse(deck, cardPosition, response);
+}
+
+/**
+ * Both the one-shot and dialog based paths lead to this method to issue the request, and
+ * respond to the user with the final answer.
+ */
+function getFinalCardResponse(deck, card, response) {
+    var cardPos = Nth(deck.order.indexOf(card));
+
+    var speechOutput = "The " + card.name + " is at the " + cardPos + "position in the "
+      + deck.name + ". ";
+
+    response.tellWithCard(speechOutput, "StackedDeckTrainer", speechOutput);
+}
+
+/**
+ * Both the one-shot and dialog based paths lead to this method to issue the request, and
+ * respond to the user with the final answer.
+ */
+function getFinalPositionResponse(deck, position, response) {
+    var cardPos = Nth(position);
+
+    var speechOutput = "The " + deck.order[position] + " is at the " + cardPos + "position in the "
+      + deck.name + ". ";
+
+    response.tellWithCard(speechOutput, "StackedDeckTrainer", speechOutput);
+}
+
+/**
+ * Gets the deck from the intent, or returns an error
+ */
+function getDeckFromIntent(intent, assignDefault) {
+
+    var deckSlot = intent.slots.Deck;
+    // slots can be missing, or slots can be provided but with empty value.
+    // must test for both.
+    if (!deckSlot || !deckSlot.value) {
+        if (!assignDefault) {
+            return {
+                error: true
+            }
+        } else {
+            // For sample skill, default to New Deck.
+            return {
+                name: DECKS['new deck'].name,
+                order: DECKS['new deck'].order
+            }
+        }
+    } else {
+        // lookup the Deck..
+        var deckName = deckSlot.value;
+        if (DECKS[deckName.toLowerCase()]) {
+            return {
+                name: DECKS[deckName.toLowerCase()].name,
+                order: DECKS[cityName.toLowerCase()].order
+            }
+        } else {
+            return {
+                error: true,
+                name: deckName
+            }
+        }
+    }
+}
+
+/**
+ * Gets the card from the intent, or returns an error
+ */
+function getCardFromIntent(intent, assignDefault) {
+
+    var cardSlot = intent.slots.Card;
+    // slots can be missing, or slots can be provided but with empty value.
+    // must test for both.
+    if (!cardSlot || !cardSlot.value) {
+        if (!assignDefault) {
+            return {
+                error: true
+            }
+        } else {
+            // For sample skill, default to Ace of Spades.
+            return {
+              name: "Ace of Spades"
+            };
+        }
+    } else {
+      return {
+        name: cardSlot.value;
+      };
+    }
+}
+
+/**
+ * Gets the position from the intent, or returns an error
+ */
+function getPositionFromIntent(intent, assignDefault) {
+
+    var positionSlot = intent.slots.Position;
+    // slots can be missing, or slots can be provided but with empty value.
+    // must test for both.
+    if (!positionSlot || !positionSlot.value) {
+        if (!assignDefault) {
+            return {
+                error: true
+            }
+        } else {
+            // For sample skill, default to 1.
+            return {
+              name: "1"
+            };
+        }
+    } else {
+      return {
+        name: positionSlot.value.slice(0,-2); //remove suffix
+      };
+    }
+}
+
+function Nth(str) {
+  var lastltr = str.substr(-1);
+    if (lastltr === "1") {
+      return str + "st";
+    }
+
+    if (lastltr === "2") {
+      return str + "nd";
+    }
+
+    if (lastltr === "3") {
+      return str + "rd";
+    }
+
+    return str + "th";
 }
 
 function getAllDecksText() {
     var deckList = '';
     for (var deck in DECKS) {
-        deckList += deck + ", ";
+        deckList += deck.name + ", ";
     }
 
     return deckList;

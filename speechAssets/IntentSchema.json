@@ -1,40 +1,62 @@
 {
   "intents": [
     {
-      "intent": "AnswerIntent",
+      "intent": "OneshotCardIntent",
       "slots": [
         {
-          "name": "Answer",
+          "name": "Deck",
+          "type": "LIST_OF_DECKS"
+        },
+        {
+          "name": "Card",
           "type": "LIST_OF_PLAYING_CARDS"
         }
       ]
     },
-        {
-      "intent": "AnswerOnlyIntent",
+      {
+        "intent": "OneshotPositionIntent",
+        "slots": [
+          {
+            "name": "Deck",
+            "type": "LIST_OF_DECKS"
+          },
+          {
+            "name": "POSITION",
+            "type": "LIST_OF_CARD_POSITIONS"
+          }
+        ]
+      },
+    {
+      "intent": "DialogDeckIntent",
       "slots": [
         {
-          "name": "Answer",
+          "name": "Deck",
+          "type": "LIST_OF_DECKS"
+        },
+        {
+          "name": "Card",
           "type": "LIST_OF_PLAYING_CARDS"
         }
       ]
     },
     {
-      "intent": "AMAZON.StartOverIntent"
+      "intent": "DialogPositionIntent",
+      "slots": [
+        {
+          "name": "Deck",
+          "type": "LIST_OF_DECKS"
+        },
+        {
+          "name": "POSITION",
+          "type": "LIST_OF_CARD_POSITIONS"
+        }
+      ]
     },
     {
-      "intent": "DontKnowIntent"
-    },
-    {
-      "intent": "AMAZON.RepeatIntent"
+      "intent": "SupportedDecksIntent"
     },
     {
       "intent": "AMAZON.HelpIntent"
-    },
-    {
-      "intent": "AMAZON.YesIntent"
-    },
-    {
-      "intent": "AMAZON.NoIntent"
     },
     {
       "intent": "AMAZON.StopIntent"

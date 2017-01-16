@@ -1,4 +1,5 @@
 DialogDeckIntent {Deck}
+DialogDeckIntent {Deck} order
 DialogDeckIntent {Deck} deck
 DialogDeckIntent {Deck} stack
 DialogDeckIntent the {Deck} deck
@@ -11,179 +12,164 @@ DialogDeckIntent {Position} location
 DialogDeckIntent the {Position} position
 DialogDeckIntent the {Position} location
 
+OneshotCardIntent name a card
+OneshotCardIntent name a card in {Deck} order
+OneshotCardIntent name a card in a {Deck} deck
+OneshotCardIntent name a card in a {Deck} stack
+OneshotCardIntent name a card in the {Deck} deck
+OneshotCardIntent name a card in the {Deck} stack
+OneshotCardIntent wheres the {Card}
+OneshotCardIntent wheres the {Card} in {Deck} order
+OneshotCardIntent wheres the {Card} in a {Deck} deck
+OneshotCardIntent wheres the {Card} in a {Deck} stack
+OneshotCardIntent wheres the {Card} in the {Deck} deck
+OneshotCardIntent wheres the {Card} in the {Deck} stack
+OneshotCardIntent where is the {Card}
+OneshotCardIntent where is the {Card} in {Deck} order
+OneshotCardIntent where is the {Card} in a {Deck} deck
+OneshotCardIntent where is the {Card} in a {Deck} stack
+OneshotCardIntent where is the {Card} in the {Deck} deck
+OneshotCardIntent where is the {Card} in the {Deck} stack
+OneshotCardIntent name the position of the {Card}
+OneshotCardIntent name the position of the {Card} in {Deck} order
+OneshotCardIntent name the position of the {Card} in a {Deck} deck
+OneshotCardIntent name the position of the {Card} in a {Deck} stack
+OneshotCardIntent name the position of the {Card} in the {Deck} deck
+OneshotCardIntent name the position of the {Card} in the {Deck} stack
+OneshotCardIntent name the location of the {Card}
+OneshotCardIntent name the location of the {Card} in {Deck} order
+OneshotCardIntent name the location of the {Card} in a {Deck} deck
+OneshotCardIntent name the location of the {Card} in a {Deck} stack
+OneshotCardIntent name the location of the {Card} in the {Deck} deck
+OneshotCardIntent name the location of the {Card} in the {Deck} stack
+OneshotCardIntent whats the position of the {Card}
+OneshotCardIntent whats the position of the {Card} in {Deck} order
+OneshotCardIntent whats the position of the {Card} in a {Deck} deck
+OneshotCardIntent whats the position of the {Card} in a {Deck} stack
+OneshotCardIntent whats the position of the {Card} in the {Deck} deck
+OneshotCardIntent whats the position of the {Card} in the {Deck} stack
+OneshotCardIntent whats the location of the {Card}
+OneshotCardIntent whats the location of the {Card} in {Deck} order
+OneshotCardIntent whats the location of the {Card} in a {Deck} deck
+OneshotCardIntent whats the location of the {Card} in a {Deck} stack
+OneshotCardIntent whats the location of the {Card} in the {Deck} deck
+OneshotCardIntent whats the location of the {Card} in the {Deck} stack
+OneshotCardIntent what is the position of the {Card}
+OneshotCardIntent what is the position of the {Card} in {Deck} order
+OneshotCardIntent what is the position of the {Card} in a {Deck} deck
+OneshotCardIntent what is the position of the {Card} in a {Deck} stack
+OneshotCardIntent what is the position of the {Card} in the {Deck} deck
+OneshotCardIntent what is the position of the {Card} in the {Deck} stack
+OneshotCardIntent what is the location of the {Card}
+OneshotCardIntent what is the location of the {Card} in {Deck} order
+OneshotCardIntent what is the location of the {Card} in a {Deck} deck
+OneshotCardIntent what is the location of the {Card} in a {Deck} stack
+OneshotCardIntent what is the location of the {Card} in the {Deck} deck
+OneshotCardIntent what is the location of the {Card} in the {Deck} stack
 
-OneshotDeckIntent name a card
-OneshotDeckIntent name a card in {Deck} order
-OneshotDeckIntent name a card in a {Deck} deck
-OneshotDeckIntent name a card in a {Deck} stack
-OneshotDeckIntent name a card in the {Deck} deck
-OneshotDeckIntent name a card in the {Deck} stack
-OneshotDeckIntent wheres the {Card}
-OneshotDeckIntent wheres the {Card} in {Deck} order
-OneshotDeckIntent wheres the {Card} in a {Deck} deck
-OneshotDeckIntent wheres the {Card} in a {Deck} stack
-OneshotDeckIntent wheres the {Card} in the {Deck} deck
-OneshotDeckIntent wheres the {Card} in the {Deck} stack
-OneshotDeckIntent where is the {Card}
-OneshotDeckIntent where is the {Card} in {Deck} order
-OneshotDeckIntent where is the {Card} in a {Deck} deck
-OneshotDeckIntent where is the {Card} in a {Deck} stack
-OneshotDeckIntent where is the {Card} in the {Deck} deck
-OneshotDeckIntent where is the {Card} in the {Deck} stack
-OneshotDeckIntent name the position of the {Card}
-OneshotDeckIntent name the position of the {Card} in {Deck} order
-OneshotDeckIntent name the position of the {Card} in a {Deck} deck
-OneshotDeckIntent name the position of the {Card} in a {Deck} stack
-OneshotDeckIntent name the position of the {Card} in the {Deck} deck
-OneshotDeckIntent name the position of the {Card} in the {Deck} stack
-OneshotDeckIntent name the location of the {Card}
-OneshotDeckIntent name the location of the {Card} in {Deck} order
-OneshotDeckIntent name the location of the {Card} in a {Deck} deck
-OneshotDeckIntent name the location of the {Card} in a {Deck} stack
-OneshotDeckIntent name the location of the {Card} in the {Deck} deck
-OneshotDeckIntent name the location of the {Card} in the {Deck} stack
-OneshotDeckIntent whats the position of the {Card}
-OneshotDeckIntent whats the position of the {Card} in {Deck} order
-OneshotDeckIntent whats the position of the {Card} in a {Deck} deck
-OneshotDeckIntent whats the position of the {Card} in a {Deck} stack
-OneshotDeckIntent whats the position of the {Card} in the {Deck} deck
-OneshotDeckIntent whats the position of the {Card} in the {Deck} stack
-OneshotDeckIntent whats the location of the {Card}
-OneshotDeckIntent whats the location of the {Card} in {Deck} order
-OneshotDeckIntent whats the location of the {Card} in a {Deck} deck
-OneshotDeckIntent whats the location of the {Card} in a {Deck} stack
-OneshotDeckIntent whats the location of the {Card} in the {Deck} deck
-OneshotDeckIntent whats the location of the {Card} in the {Deck} stack
-OneshotDeckIntent what is the position of the {Card}
-OneshotDeckIntent what is the position of the {Card} in {Deck} order
-OneshotDeckIntent what is the position of the {Card} in a {Deck} deck
-OneshotDeckIntent what is the position of the {Card} in a {Deck} stack
-OneshotDeckIntent what is the position of the {Card} in the {Deck} deck
-OneshotDeckIntent what is the position of the {Card} in the {Deck} stack
-OneshotDeckIntent what is the location of the {Card}
-OneshotDeckIntent what is the location of the {Card} in {Deck} order
-OneshotDeckIntent what is the location of the {Card} in a {Deck} deck
-OneshotDeckIntent what is the location of the {Card} in a {Deck} stack
-OneshotDeckIntent what is the location of the {Card} in the {Deck} deck
-OneshotDeckIntent what is the location of the {Card} in the {Deck} stack
+OneshotPositionIntent name a position
+OneshotPositionIntent name a position in a {Deck} deck
+OneshotPositionIntent name a position in a {Deck} stack
+OneshotPositionIntent name a position in the {Deck} deck
+OneshotPositionIntent name a position in the {Deck} stack
+OneshotPositionIntent whats at the {Position} position
+OneshotPositionIntent whats at the {Position} position in {Deck} order
+OneshotPositionIntent whats at the {Position} position in a {Deck} deck
+OneshotPositionIntent whats at the {Position} position in a {Deck} stack
+OneshotPositionIntent whats at the {Position} position in the {Deck} deck
+OneshotPositionIntent whats at the {Position} position in the {Deck} stack
+OneshotPositionIntent whats the card at the {Position} position
+OneshotPositionIntent whats the card at the {Position} position in {Deck} order
+OneshotPositionIntent whats the card at the {Position} position in a {Deck} deck
+OneshotPositionIntent whats the card at the {Position} position in a {Deck} stack
+OneshotPositionIntent whats the card at the {Position} position in the {Deck} deck
+OneshotPositionIntent whats the card at the {Position} position in the {Deck} stack
+OneshotPositionIntent what is at the {Position} position
+OneshotPositionIntent what is at the {Position} position in {Deck} order
+OneshotPositionIntent what is at the {Position} position in a {Deck} deck
+OneshotPositionIntent what is at the {Position} position in a {Deck} stack
+OneshotPositionIntent what is at the {Position} position in the {Deck} deck
+OneshotPositionIntent what is at the {Position} position in the {Deck} stack
+OneshotPositionIntent what is the card at the {Position} position
+OneshotPositionIntent what is the card at the {Position} position in {Deck} order
+OneshotPositionIntent what is the card at the {Position} position in a {Deck} deck
+OneshotPositionIntent what is the card at the {Position} position in a {Deck} stack
+OneshotPositionIntent what is the card at the {Position} position in the {Deck} deck
+OneshotPositionIntent what is the card at the {Position} position in the {Deck} stack
+OneshotPositionIntent what card is at the {Position} position
+OneshotPositionIntent what card is at the {Position} position in {Deck} order
+OneshotPositionIntent what card is at the {Position} position in a {Deck} deck
+OneshotPositionIntent what card is at the {Position} position in a {Deck} stack
+OneshotPositionIntent what card is at the {Position} position in the {Deck} deck
+OneshotPositionIntent what card is at the {Position} position in the {Deck} stack
+OneshotPositionIntent name the card at the {Position} position
+OneshotPositionIntent name the card at the {Position} position in {Deck} order
+OneshotPositionIntent name the card at the {Position} position in a {Deck} deck
+OneshotPositionIntent name the card at the {Position} position in a {Deck} stack
+OneshotPositionIntent name the card at the {Position} position in the {Deck} deck
+OneshotPositionIntent name the card at the {Position} position in the {Deck} stack
 
-OneshotDeckIntent name a position
-OneshotDeckIntent name a position in a {Deck} deck
-OneshotDeckIntent name a position in a {Deck} stack
-OneshotDeckIntent name a position in the {Deck} deck
-OneshotDeckIntent name a position in the {Deck} stack
-OneshotDeckIntent whats at the {Position} position
-OneshotDeckIntent whats at the {Position} position in {Deck} order
-OneshotDeckIntent whats at the {Position} position in a {Deck} deck
-OneshotDeckIntent whats at the {Position} position in a {Deck} stack
-OneshotDeckIntent whats at the {Position} position in the {Deck} deck
-OneshotDeckIntent whats at the {Position} position in the {Deck} stack
-OneshotDeckIntent whats the card at the {Position} position
-OneshotDeckIntent whats the card at the {Position} position in {Deck} order
-OneshotDeckIntent whats the card at the {Position} position in a {Deck} deck
-OneshotDeckIntent whats the card at the {Position} position in a {Deck} stack
-OneshotDeckIntent whats the card at the {Position} position in the {Deck} deck
-OneshotDeckIntent whats the card at the {Position} position in the {Deck} stack
-OneshotDeckIntent what is at the {Position} position
-OneshotDeckIntent what is at the {Position} position in {Deck} order
-OneshotDeckIntent what is at the {Position} position in a {Deck} deck
-OneshotDeckIntent what is at the {Position} position in a {Deck} stack
-OneshotDeckIntent what is at the {Position} position in the {Deck} deck
-OneshotDeckIntent what is at the {Position} position in the {Deck} stack
-OneshotDeckIntent what is the card at the {Position} position
-OneshotDeckIntent what is the card at the {Position} position in {Deck} order
-OneshotDeckIntent what is the card at the {Position} position in a {Deck} deck
-OneshotDeckIntent what is the card at the {Position} position in a {Deck} stack
-OneshotDeckIntent what is the card at the {Position} position in the {Deck} deck
-OneshotDeckIntent what is the card at the {Position} position in the {Deck} stack
-OneshotDeckIntent what card is at the {Position} position
-OneshotDeckIntent what card is at the {Position} position in {Deck} order
-OneshotDeckIntent what card is at the {Position} position in a {Deck} deck
-OneshotDeckIntent what card is at the {Position} position in a {Deck} stack
-OneshotDeckIntent what card is at the {Position} position in the {Deck} deck
-OneshotDeckIntent what card is at the {Position} position in the {Deck} stack
-OneshotDeckIntent name the card at the {Position} position
-OneshotDeckIntent name the card at the {Position} position in {Deck} order
-OneshotDeckIntent name the card at the {Position} position in a {Deck} deck
-OneshotDeckIntent name the card at the {Position} position in a {Deck} stack
-OneshotDeckIntent name the card at the {Position} position in the {Deck} deck
-OneshotDeckIntent name the card at the {Position} position in the {Deck} stack
+OneshotPositionIntent name a location
+OneshotPositionIntent name a location in {Deck} order
+OneshotPositionIntent name a location in a {Deck} deck
+OneshotPositionIntent name a location in a {Deck} stack
+OneshotPositionIntent name a location in the {Deck} deck
+OneshotPositionIntent name a location in the {Deck} stack
+OneshotPositionIntent whats at the {Position} location
+OneshotPositionIntent whats at the {Position} location in {Deck} order
+OneshotPositionIntent whats at the {Position} location in a {Deck} deck
+OneshotPositionIntent whats at the {Position} location in a {Deck} stack
+OneshotPositionIntent whats at the {Position} location in the {Deck} deck
+OneshotPositionIntent whats at the {Position} location in the {Deck} stack
+OneshotPositionIntent whats the card at the {Position} location
+OneshotPositionIntent whats the card at the {Position} location in {Deck} order
+OneshotPositionIntent whats the card at the {Position} location in a {Deck} deck
+OneshotPositionIntent whats the card at the {Position} location in a {Deck} stack
+OneshotPositionIntent whats the card at the {Position} location in the {Deck} deck
+OneshotPositionIntent whats the card at the {Position} location in the {Deck} stack
+OneshotPositionIntent what is at the {Position} location
+OneshotPositionIntent what is at the {Position} location in {Deck} order
+OneshotPositionIntent what is at the {Position} location in a {Deck} deck
+OneshotPositionIntent what is at the {Position} location in a {Deck} stack
+OneshotPositionIntent what is at the {Position} location in the {Deck} deck
+OneshotPositionIntent what is at the {Position} location in the {Deck} stack
+OneshotPositionIntent what is the card at the {Position} location
+OneshotPositionIntent what is the card at the {Position} location in {Deck} order
+OneshotPositionIntent what is the card at the {Position} location in a {Deck} deck
+OneshotPositionIntent what is the card at the {Position} location in a {Deck} stack
+OneshotPositionIntent what is the card at the {Position} location in the {Deck} deck
+OneshotPositionIntent what is the card at the {Position} location in the {Deck} stack
+OneshotPositionIntent what card is at the {Position} location
+OneshotPositionIntent what card is at the {Position} location in {Deck} order
+OneshotPositionIntent what card is at the {Position} location in a {Deck} deck
+OneshotPositionIntent what card is at the {Position} location in a {Deck} stack
+OneshotPositionIntent what card is at the {Position} location in the {Deck} deck
+OneshotPositionIntent what card is at the {Position} location in the {Deck} stack
+OneshotPositionIntent name the card at the {Position} location
+OneshotPositionIntent name the card at the {Position} location in {Deck} order
+OneshotPositionIntent name the card at the {Position} location in a {Deck} deck
+OneshotPositionIntent name the card at the {Position} location in a {Deck} stack
+OneshotPositionIntent name the card at the {Position} location in the {Deck} deck
+OneshotPositionIntent name the card at the {Position} location in the {Deck} stack
 
-OneshotDeckIntent name a location
-OneshotDeckIntent name a location in {Deck} order
-OneshotDeckIntent name a location in a {Deck} deck
-OneshotDeckIntent name a location in a {Deck} stack
-OneshotDeckIntent name a location in the {Deck} deck
-OneshotDeckIntent name a location in the {Deck} stack
-OneshotDeckIntent whats at the {Position} location
-OneshotDeckIntent whats at the {Position} location in {Deck} order
-OneshotDeckIntent whats at the {Position} location in a {Deck} deck
-OneshotDeckIntent whats at the {Position} location in a {Deck} stack
-OneshotDeckIntent whats at the {Position} location in the {Deck} deck
-OneshotDeckIntent whats at the {Position} location in the {Deck} stack
-OneshotDeckIntent whats the card at the {Position} location
-OneshotDeckIntent whats the card at the {Position} location in {Deck} order
-OneshotDeckIntent whats the card at the {Position} location in a {Deck} deck
-OneshotDeckIntent whats the card at the {Position} location in a {Deck} stack
-OneshotDeckIntent whats the card at the {Position} location in the {Deck} deck
-OneshotDeckIntent whats the card at the {Position} location in the {Deck} stack
-OneshotDeckIntent what is at the {Position} location
-OneshotDeckIntent what is at the {Position} location in {Deck} order
-OneshotDeckIntent what is at the {Position} location in a {Deck} deck
-OneshotDeckIntent what is at the {Position} location in a {Deck} stack
-OneshotDeckIntent what is at the {Position} location in the {Deck} deck
-OneshotDeckIntent what is at the {Position} location in the {Deck} stack
-OneshotDeckIntent what is the card at the {Position} location
-OneshotDeckIntent what is the card at the {Position} location in {Deck} order
-OneshotDeckIntent what is the card at the {Position} location in a {Deck} deck
-OneshotDeckIntent what is the card at the {Position} location in a {Deck} stack
-OneshotDeckIntent what is the card at the {Position} location in the {Deck} deck
-OneshotDeckIntent what is the card at the {Position} location in the {Deck} stack
-OneshotDeckIntent what card is at the {Position} location
-OneshotDeckIntent what card is at the {Position} location in {Deck} order
-OneshotDeckIntent what card is at the {Position} location in a {Deck} deck
-OneshotDeckIntent what card is at the {Position} location in a {Deck} stack
-OneshotDeckIntent what card is at the {Position} location in the {Deck} deck
-OneshotDeckIntent what card is at the {Position} location in the {Deck} stack
-OneshotDeckIntent name the card at the {Position} location
-OneshotDeckIntent name the card at the {Position} location in {Deck} order
-OneshotDeckIntent name the card at the {Position} location in a {Deck} deck
-OneshotDeckIntent name the card at the {Position} location in a {Deck} stack
-OneshotDeckIntent name the card at the {Position} location in the {Deck} deck
-OneshotDeckIntent name the card at the {Position} location in the {Deck} stack
+AvailableDecksIntent what decks
+AvailableDecksIntent what decks are available
+AvailableDecksIntent which decks are available
+AvailableDecksIntent which decks
+AvailableDecksIntent which decks do you know
+AvailableDecksIntent name the decks you know
+AvailableDecksIntent name the decks that are available
 
-SupportedDecksIntent what decks
-SupportedDecksIntent what decks are supported
-SupportedDecksIntent which decks are supported
-SupportedDecksIntent which decks
-SupportedDecksIntent which decks do you know
-SupportedDecksIntent name the decks you know
-SupportedDecksIntent name the decks that are supported
+AvailableDecksIntent what stacks
+AvailableDecksIntent what stacks are available
+AvailableDecksIntent which stacks are available
+AvailableDecksIntent which stacks
+AvailableDecksIntent which stacks do you know
+AvailableDecksIntent name the stacks you know
+AvailableDecksIntent name the stacks that are available
 
-SupportedDecksIntent what stacks
-SupportedDecksIntent what stacks are supported
-SupportedDecksIntent which stacks are supported
-SupportedDecksIntent which stacks
-SupportedDecksIntent which stacks do you know
-SupportedDecksIntent name the stacks you know
-SupportedDecksIntent name the stacks that are supported
-
-SetDeckIntent set deck to the {Deck} deck
-SetDeckIntent set deck to the {Deck} stack
-SetDeckIntent set stack to the {Deck} deck
-SetDeckIntent set stack to the {Deck} stack
-SetDeckIntent set the deck to the {Deck} deck
-SetDeckIntent set the deck to the {Deck} stack
-SetDeckIntent set the stack to the {Deck} deck
-SetDeckIntent set the stack to the {Deck} stack
-SetDeckIntent set this deck to the {Deck} deck
-SetDeckIntent set this deck to the {Deck} stack
-SetDeckIntent set this stack to the {Deck} deck
-SetDeckIntent set this stack to the {Deck} stack
-SetDeckIntent set this to the {Deck} deck
-SetDeckIntent set this to the {Deck} stack
-
-getDeckIntent what decks is this
+getDeckIntent what is this
+getDeckIntent what deck is this
 getDeckIntent what stack is this
 getDeckIntent name the deck
 getDeckIntent name the stack
