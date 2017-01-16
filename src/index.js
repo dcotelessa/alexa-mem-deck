@@ -18,28 +18,28 @@ var APP_ID = undefined;//replace with 'amzn1.echo-sdk-ams.app.[your-unique-value
  */
 var AlexaSkill = require('./AlexaSkill');
 
-var StackedDeckTrainer = function () {
+var StackedDeck = function () {
     AlexaSkill.call(this, APP_ID);
 };
 
 // Extend AlexaSkill
-StackedDeckTrainer.prototype = Object.create(AlexaSkill.prototype);
-StackedDeckTrainer.prototype.constructor = StackedDeckTrainer;
+StackedDeck.prototype = Object.create(AlexaSkill.prototype);
+StackedDeck.prototype.constructor = StackedDeck;
 
 // ----------------------- Override AlexaSkill request and intent handlers -----------------------
 
-StackedDeckTrainer.prototype.eventHandlers.onSessionStarted = function (sessionStartedRequest, session) {
+StackedDeck.prototype.eventHandlers.onSessionStarted = function (sessionStartedRequest, session) {
     console.log("onSessionStarted requestId: " + sessionStartedRequest.requestId
         + ", sessionId: " + session.sessionId);
     // any initialization logic goes here
 };
 
-StackedDeckTrainer.prototype.eventHandlers.onLaunch = function (launchRequest, session, response) {
+StackedDeck.prototype.eventHandlers.onLaunch = function (launchRequest, session, response) {
     console.log("onLaunch requestId: " + launchRequest.requestId + ", sessionId: " + session.sessionId);
     handleWelcomeRequest(response);
 };
 
-StackedDeckTrainer.prototype.eventHandlers.onSessionEnded = function (sessionEndedRequest, session) {
+StackedDeck.prototype.eventHandlers.onSessionEnded = function (sessionEndedRequest, session) {
     console.log("onSessionEnded requestId: " + sessionEndedRequest.requestId
         + ", sessionId: " + session.sessionId);
     // any cleanup logic goes here
@@ -48,12 +48,12 @@ StackedDeckTrainer.prototype.eventHandlers.onSessionEnded = function (sessionEnd
 /**
  * override intentHandlers to map intent handling functions.
  */
-StackedDeckTrainer.prototype.intentHandlers = {
+StackedDeck.prototype.intentHandlers = {
     "OneshotCardIntent": function (intent, session, response) {
         handleOneshotCardRequest(intent, session, response);
     },
 
-    "OneshotDPositionIntent": function (intent, session, response) {
+    "OneshotPositionIntent": function (intent, session, response) {
         handleOneshotPositionRequest(intent, session, response);
     },
 
@@ -386,10 +386,10 @@ function handleAvailableDecksRequest(intent, session, response) {
  */
 function handleDeckDialogRequest(intent, session, response) {
 
-    var stackedDeck = getDeckFromIntent(intent, false),
+    var deck = getDeckFromIntent(intent, false),
         repromptText,
         speechOutput;
-    if (stackedDeck.error) {
+    if (deck.error) {
         repromptText = "Currently, I know the order of these stacked decks: " + getAllDecksText()
             + "Which deck do we want to use?";
         // if we received a value for the incorrect city, repeat it to the user, otherwise we received an empty slot
@@ -400,15 +400,15 @@ function handleDeckDialogRequest(intent, session, response) {
 
     // if we don't have a card yet, go to card. If we have a card, we perform the final request
     if (session.attributes.card) {
-        getFinalCardResponse(stackedDeck, session.attributes.card, response);
+        getFinalCardResponse(deck, session.attributes.card, response);
     // if we don't have a position yet, go to position. If we have a position, we perform the final request
     } else if (session.attributes.position) {
-        getFinalPositionResponse(stackedDeck, session.attributes.position, response);
+        getFinalPositionResponse(deck, session.attributes.position, response);
     } else {
         // set deck in session and prompt for card or position
-        session.attributes.deck = stackedDeck;
-        speechOutput = "From the " + stackedDeck.name +" stack, name a position or name of card.";
-        repromptText = "Name a position or name of card for the " + stackedDeck.name + " stack.";
+        session.attributes.deck = deck;
+        speechOutput = "From the " + deck.name +" stack, name a position or name of card.";
+        repromptText = "Name a position or name of card for the " + deck.name + " stack.";
 
         response.ask(speechOutput, repromptText);
     }
@@ -505,10 +505,10 @@ function handleNoSlotDialogRequest(intent, session, response) {
 function handleOneshotCardRequest(intent, session, response) {
 
     // Determine deck, using default if none provided
-    var stackedDeck = getDeckFromIntent(intent, true),
+    var deck = getDeckFromIntent(intent, true),
         repromptText,
         speechOutput;
-    if (stackedDeck.error) {
+    if (deck.error) {
         // invalid deck. move to the dialog
         var repromptText = "Currently, I know the order of these stacked decks: " + getAllDecksText()
             + "Which deck do we want to use?";
@@ -522,7 +522,7 @@ function handleOneshotCardRequest(intent, session, response) {
     // Determine custom card
     var card = getCardFromIntent(intent);
     if (!card) {
-        // Invalid date. set card in session
+        // Invalid card. set card in session
         session.attributes.card = card;
         repromptText = "Please try again saying a card name, for example, Ten of Diamonds. ",
             + "Which card do we want to locate?";
@@ -544,10 +544,10 @@ function handleOneshotCardRequest(intent, session, response) {
 function handleOneshotPositionRequest(intent, session, response) {
 
     // Determine deck, using default if none provided
-    var stackedDeck = getDeckFromIntent(intent, true),
+    var deck = getDeckFromIntent(intent, true),
         repromptText,
         speechOutput;
-    if (stackedDeck.error) {
+    if (deck.error) {
         // invalid deck. move to the dialog
         var repromptText = "Currently, I know the order of these stacked decks: " + getAllDecksText()
             + "Which deck do we want to use?";
@@ -585,7 +585,7 @@ function getFinalCardResponse(deck, card, response) {
     var speechOutput = "The " + card.name + " is at the " + cardPos + "position in the "
       + deck.name + ". ";
 
-    response.tellWithCard(speechOutput, "StackedDeckTrainer", speechOutput);
+    response.tellWithCard(speechOutput, "StackedDeck", speechOutput);
 }
 
 /**
@@ -598,7 +598,7 @@ function getFinalPositionResponse(deck, position, response) {
     var speechOutput = "The " + deck.order[position] + " is at the " + cardPos + "position in the "
       + deck.name + ". ";
 
-    response.tellWithCard(speechOutput, "StackedDeckTrainer", speechOutput);
+    response.tellWithCard(speechOutput, "StackedDeck", speechOutput);
 }
 
 /**
@@ -719,6 +719,6 @@ function getAllDecksText() {
 
 // Create the handler that responds to the Alexa Request.
 exports.handler = function (event, context) {
-    var stackedDeckTrainer = new StackedDeckTrainer();
-    stackedDeckTrainer.execute(event, context);
+    var stackedDeck = new StackedDeck();
+    stackedDeck.execute(event, context);
 };

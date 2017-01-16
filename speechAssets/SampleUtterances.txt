@@ -12,12 +12,6 @@ DialogDeckIntent {Position} location
 DialogDeckIntent the {Position} position
 DialogDeckIntent the {Position} location
 
-OneshotCardIntent name a card
-OneshotCardIntent name a card in {Deck} order
-OneshotCardIntent name a card in a {Deck} deck
-OneshotCardIntent name a card in a {Deck} stack
-OneshotCardIntent name a card in the {Deck} deck
-OneshotCardIntent name a card in the {Deck} stack
 OneshotCardIntent wheres the {Card}
 OneshotCardIntent wheres the {Card} in {Deck} order
 OneshotCardIntent wheres the {Card} in a {Deck} deck
@@ -67,11 +61,6 @@ OneshotCardIntent what is the location of the {Card} in a {Deck} stack
 OneshotCardIntent what is the location of the {Card} in the {Deck} deck
 OneshotCardIntent what is the location of the {Card} in the {Deck} stack
 
-OneshotPositionIntent name a position
-OneshotPositionIntent name a position in a {Deck} deck
-OneshotPositionIntent name a position in a {Deck} stack
-OneshotPositionIntent name a position in the {Deck} deck
-OneshotPositionIntent name a position in the {Deck} stack
 OneshotPositionIntent whats at the {Position} position
 OneshotPositionIntent whats at the {Position} position in {Deck} order
 OneshotPositionIntent whats at the {Position} position in a {Deck} deck
