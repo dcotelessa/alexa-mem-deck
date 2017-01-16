@@ -11,7 +11,7 @@
  /**
  * App ID for the skill
  */
-var APP_ID = undefined;//replace with 'amzn1.echo-sdk-ams.app.[your-unique-value-here]';
+var APP_ID = 'amzn1.ask.skill.c2d3ff33-17e2-4606-9f2a-2026785dfd99'; //replace with 'amzn1.echo-sdk-ams.app.[your-unique-value-here]';
 
 /**
  * The AlexaSkill prototype and helper functions
@@ -60,7 +60,7 @@ StackedDeck.prototype.intentHandlers = {
     "DialogDeckIntent": function (intent, session, response) {
         // Determine if this turn is for deck, for card, for position, or an error.
         // We could be passed  s with values, no slots, slots with no value.
-        var deckSlot = intent.slots.Deck;
+        var deckSlot = intent.slots.Stack;
         var cardSlot = intent.slots.Card;
         var positionSlot = intent.slots.Position;
 
@@ -94,7 +94,7 @@ StackedDeck.prototype.intentHandlers = {
     }
 };
 
-// -------------------------- Stacked Deck Trainer Domain Specific Business Logic --------------------------
+// -------------------------- Stacked Deck Domain Specific Business Logic --------------------------
 
 // set decks
 var DECKS = {
@@ -325,28 +325,24 @@ var DECKS = {
         "Queen of Spades",
         "King of Spades"
       ]
-    },
+    }
 };
 
 function handleWelcomeRequest(response) {
     var whichDeckPrompt = "Which deck do we want to use?",
         speechOutput = {
-            speech: "<speak>Welcome to the Stacked Deck Trainer.",
-                + whichDeckPrompt
-                + "</speak>",
-            type: AlexaSkill.speechOutputType.SSML
+            speech: "Welcome to the Stacked Deck Trainer."
+                + whichDeckPrompt,
+            type: AlexaSkill.speechOutputType.PLAIN_TEXT
         },
         repromptOutput = {
-            speech: "Once you tell me what stack we will be using, ",
-                + "you can ask for the position of specific card in the deck ",
-                + "or the name of card at a specific position ",
-                + "or switch stacked decks.",
-                + "You can also ask what stack am I using.",
-                + "Also, you can simply open Stacked Deck Trainer and ask a question like, ",
-                + "where is the Ace of Hearts in a Tamariz stack? ",
-                + "or, name the card at the twenty-seventh position.",
-                + "You can set a default stack by saying, set stack to Aronson.",
-                + "For a list of currently available stacked decks, ask what decks are available. ",
+            speech: "Once you tell me what stack we will be using, "
+                + "you can ask for the position of specific card in the deck "
+                + "or the name of card at a specific position. "
+                + "Also, you can simply open Stacked Deck and ask a question like, "
+                + "where is the Ace of Hearts in a Tamariz stack? "
+                + "or, name the card at the twenty-seventh position."
+                + "For a list of currently available stacked decks, ask what decks are available. "
                 + whichDeckPrompt,
             type: AlexaSkill.speechOutputType.PLAIN_TEXT
         };
@@ -355,16 +351,16 @@ function handleWelcomeRequest(response) {
 }
 
 function handleHelpRequest(response) {
-    var repromptText = "Which deck do we want to use?";
-    var speechOutput = "You can ask for the position of specific card ",
-        + "or the name of card at a specific position",
-        + "from one of the stacked decks",
-        + "or you can simply open Stacked Deck Trainer and ask a question like, ",
-        + "where is the Ace of Hearts in a Tamariz deck? ",
-        + "or, name the card at the twenty-seventh position.",
-        + "For a list of currently available stacked decks, ask what decks are available. ",
-        + "Or you can say exit. ",
-        + repromptText;
+    var repromptText = "Which deck do we want to use?",
+        speechOutput = "You can ask for the position of specific card "
+            + "or the name of card at a specific position"
+            + "from one of the stacked decks"
+            + "or you can simply open Stacked Deck and ask a question like, "
+            + "where is the Ace of Hearts in a Tamariz deck? "
+            + "or, name the card at the twenty-seventh position."
+            + "For a list of currently available stacked decks, ask what decks are available. "
+            + "Or you can say exit. "
+            + repromptText;
 
     response.ask(speechOutput, repromptText);
 }
@@ -373,10 +369,10 @@ function handleHelpRequest(response) {
  * Handles the case where the user asked or for, or is otherwise being with available decks
  */
 function handleAvailableDecksRequest(intent, session, response) {
-    // get city re-prompt
-    var repromptText = "Which deck do we want to use?";
-    var speechOutput = "Currently, I know the order of these stacked decks: " + getAllDecksText()
-        + repromptText;
+    // get decks re-prompt
+    var repromptText = "Which deck do we want to use?",
+        speechOutput = "Currently, I know the order of these stacked decks: " + getAllDecksText()
+            + ". "+ repromptText;
 
     response.ask(speechOutput, repromptText);
 }
@@ -391,9 +387,9 @@ function handleDeckDialogRequest(intent, session, response) {
         speechOutput;
     if (deck.error) {
         repromptText = "Currently, I know the order of these stacked decks: " + getAllDecksText()
-            + "Which deck do we want to use?";
-        // if we received a value for the incorrect city, repeat it to the user, otherwise we received an empty slot
-        speechOutput = "I'm sorry, I don't know that stack. " + repromptText
+            + ". Which deck do we want to use?";
+        // if we received a value for the incorrect deck, repeat it to the user, otherwise we received an empty slot
+        speechOutput = "I'm sorry, I don't know that stack. " + repromptText;
         response.ask(speechOutput, repromptText);
         return;
     }
@@ -424,8 +420,8 @@ function handleCardDialogRequest(intent, session, response) {
         speechOutput;
 
     if (!card) {
-        repromptText = "Please try again saying a card name, for example, Ace of Spades. ",
-            + "Which card are you looking for?";
+        repromptText = "Please try again saying a card name, for example, Ace of Spades. "
+            + " Which card are you looking for?";
         speechOutput = "I'm sorry, I didn't understand that card name. " + repromptText;
 
         response.ask(speechOutput, repromptText);
@@ -455,8 +451,8 @@ function handlePositionDialogRequest(intent, session, response) {
         speechOutput;
 
     if (!cardPosition) {
-        repromptText = "Please try again saying a card position, for example, the 22nd position. ",
-            + "Which position are you looking for?";
+        repromptText = "Please try again saying a card position, for example, the 22nd position. "
+            + " Which position are you looking for?";
         speechOutput = "I'm sorry, I didn't understand that card position. " + repromptText;
 
         response.ask(speechOutput, repromptText);
@@ -467,7 +463,7 @@ function handlePositionDialogRequest(intent, session, response) {
     if (session.attributes.deck) {
         getFinalDeckResponse(session.attributes.deck, cardPosition, response);
     } else {
-        // set city in session and prompt for date
+        // set deck in session and prompt for date
         session.attributes.position = cardPosition;
         speechOutput = "For which deck?";
         repromptText = "Which deck are you looking in?";
@@ -486,9 +482,9 @@ function handlePositionDialogRequest(intent, session, response) {
 function handleNoSlotDialogRequest(intent, session, response) {
     if (session.attributes.deck) {
         // get card name/position re-prompt
-        var repromptText = "Please try again saying a card name, like the Queen of Hearts, ",
-          + "or a card position, like the 11th position.";
-        var speechOutput = repromptText;
+        var repromptText = "Please try again saying a card name, like the Queen of Hearts, "
+          + "or a card position, like the 11th position.",
+          speechOutput = repromptText;
 
         response.ask(speechOutput, repromptText);
     } else {
@@ -499,19 +495,19 @@ function handleNoSlotDialogRequest(intent, session, response) {
 
 /**
  * This handles a one-shot interaction, where the user utters a phrase like:
- * 'Alexa, open Stacked Deck Trainer and get card for the Tamariz'.
+ * 'Alexa, open Stacked Deck and get card for the Tamariz'.
  * If there is an error in a slot, this will guide the user to the dialog approach.
  */
 function handleOneshotCardRequest(intent, session, response) {
 
     // Determine deck, using default if none provided
-    var deck = getDeckFromIntent(intent, true),
+    var deck = getDeckFromIntent(intent, false),
         repromptText,
         speechOutput;
     if (deck.error) {
         // invalid deck. move to the dialog
-        var repromptText = "Currently, I know the order of these stacked decks: " + getAllDecksText()
-            + "Which deck do we want to use?";
+        repromptText = "Currently, I know the order of these stacked decks: " + getAllDecksText()
+            + ". Which deck do we want to use?";
         // if we received a value for the incorrect deck, repeat it to the user, otherwise we received an empty slot
         speechOutput = "I'm sorry, I don't know that stack. " + repromptText;
 
@@ -523,7 +519,7 @@ function handleOneshotCardRequest(intent, session, response) {
     var card = getCardFromIntent(intent);
     if (!card) {
         // Invalid card. set card in session
-        session.attributes.card = card;
+        session.attributes.deck = deck;
         repromptText = "Please try again saying a card name, for example, Ten of Diamonds. ",
             + "Which card do we want to locate?";
         speechOutput = "I'm sorry, I didn't understand that card. " + repromptText;
@@ -538,19 +534,19 @@ function handleOneshotCardRequest(intent, session, response) {
 
 /**
  * This handles the one-shot interaction, where the user utters a phrase like:
- * 'Alexa, open Stacked Deck Trainer and get card for the Tamariz'.
+ * 'Alexa, open Stacked Deck and get card for the Tamariz'.
  * If there is an error in a slot, this will guide the user to the dialog approach.
  */
 function handleOneshotPositionRequest(intent, session, response) {
 
     // Determine deck, using default if none provided
-    var deck = getDeckFromIntent(intent, true),
+    var deck = getDeckFromIntent(intent, false),
         repromptText,
         speechOutput;
     if (deck.error) {
         // invalid deck. move to the dialog
-        var repromptText = "Currently, I know the order of these stacked decks: " + getAllDecksText()
-            + "Which deck do we want to use?";
+        repromptText = "Currently, I know the order of these stacked decks: " + getAllDecksText()
+            + ". Which deck do we want to use?";
         // if we received a value for the incorrect deck, repeat it to the user, otherwise we received an empty slot
         speechOutput = "I'm sorry, I don't know that stack. " + repromptText;
 
@@ -559,11 +555,11 @@ function handleOneshotPositionRequest(intent, session, response) {
     }
 
     // Determine custom position
-    var cardPosition = getPositionFromIntent(intent);
+    var cardPosition = getPositionFromIntent(intent, false);
     if (!cardPosition) {
         // Invalid position. set position in session
-        session.attributes.card = cardName;
-        repromptText = "Please try again saying a card location, for example, the 32nd position ",
+        session.attributes.deck = deck;
+        repromptText = "Please try again saying a card location, for example, the 32nd position "
             + "What location do we want to discover?";
         speechOutput = "I'm sorry, I didn't understand that location. " + repromptText;
 
@@ -580,10 +576,9 @@ function handleOneshotPositionRequest(intent, session, response) {
  * respond to the user with the final answer.
  */
 function getFinalCardResponse(deck, card, response) {
-    var cardPos = Nth(deck.order.indexOf(card));
-
-    var speechOutput = "The " + card.name + " is at the " + cardPos + "position in the "
-      + deck.name + ". ";
+    var cardPos = Nth(deck.order.indexOf(card.name)),
+        speechOutput = "The " + card.name + " is at the " + cardPos + " position in the "
+            + deck.name + " stack. ";
 
     response.tellWithCard(speechOutput, "StackedDeck", speechOutput);
 }
@@ -593,10 +588,9 @@ function getFinalCardResponse(deck, card, response) {
  * respond to the user with the final answer.
  */
 function getFinalPositionResponse(deck, position, response) {
-    var cardPos = Nth(position);
-
-    var speechOutput = "The " + deck.order[position] + " is at the " + cardPos + "position in the "
-      + deck.name + ". ";
+    var cardPos = Nth(position.name),
+        speechOutput = "The " + deck.order[position.name] + " is at the " + cardPos + " position in the "
+            + deck.name + " stack. ";
 
     response.tellWithCard(speechOutput, "StackedDeck", speechOutput);
 }
@@ -606,20 +600,20 @@ function getFinalPositionResponse(deck, position, response) {
  */
 function getDeckFromIntent(intent, assignDefault) {
 
-    var deckSlot = intent.slots.Deck;
+    var deckSlot = intent.slots.Stack;
     // slots can be missing, or slots can be provided but with empty value.
     // must test for both.
     if (!deckSlot || !deckSlot.value) {
         if (!assignDefault) {
             return {
                 error: true
-            }
+            };
         } else {
             // For sample skill, default to New Deck.
             return {
                 name: DECKS['new deck'].name,
                 order: DECKS['new deck'].order
-            }
+            };
         }
     } else {
         // lookup the Deck..
@@ -627,13 +621,13 @@ function getDeckFromIntent(intent, assignDefault) {
         if (DECKS[deckName.toLowerCase()]) {
             return {
                 name: DECKS[deckName.toLowerCase()].name,
-                order: DECKS[cityName.toLowerCase()].order
-            }
+                order: DECKS[deckName.toLowerCase()].order
+            };
         } else {
             return {
                 error: true,
-                name: deckName
-            }
+                name: deckName.toLowerCase()
+            };
         }
     }
 }
@@ -650,7 +644,7 @@ function getCardFromIntent(intent, assignDefault) {
         if (!assignDefault) {
             return {
                 error: true
-            }
+            };
         } else {
             // For sample skill, default to Ace of Spades.
             return {
@@ -659,7 +653,7 @@ function getCardFromIntent(intent, assignDefault) {
         }
     } else {
       return {
-        name: cardSlot.value;
+        name: cardSlot.value
       };
     }
 }
@@ -676,7 +670,7 @@ function getPositionFromIntent(intent, assignDefault) {
         if (!assignDefault) {
             return {
                 error: true
-            }
+            };
         } else {
             // For sample skill, default to 1.
             return {
@@ -684,8 +678,9 @@ function getPositionFromIntent(intent, assignDefault) {
             };
         }
     } else {
+      //remove suffix
       return {
-        name: positionSlot.value.slice(0,-2); //remove suffix
+        name: positionSlot.value.slice(0,-2)
       };
     }
 }
@@ -710,7 +705,7 @@ function Nth(str) {
 function getAllDecksText() {
     var deckList = '';
     for (var deck in DECKS) {
-        deckList += deck.name + ", ";
+        deckList += DECKS[deck].name + ", ";
     }
 
     return deckList;

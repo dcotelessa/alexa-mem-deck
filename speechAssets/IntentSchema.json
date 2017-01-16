@@ -4,7 +4,7 @@
       "intent": "OneshotCardIntent",
       "slots": [
         {
-          "name": "Deck",
+          "name": "Stack",
           "type": "LIST_OF_DECKS"
         },
         {
@@ -17,11 +17,11 @@
         "intent": "OneshotPositionIntent",
         "slots": [
           {
-            "name": "Deck",
+            "name": "Stack",
             "type": "LIST_OF_DECKS"
           },
           {
-            "name": "POSITION",
+            "name": "Position",
             "type": "LIST_OF_CARD_POSITIONS"
           }
         ]
@@ -30,8 +30,12 @@
       "intent": "DialogDeckIntent",
       "slots": [
         {
-          "name": "Deck",
+          "name": "Stack",
           "type": "LIST_OF_DECKS"
+        },
+        {
+          "name": "Position",
+          "type": "LIST_OF_CARD_POSITIONS"
         },
         {
           "name": "Card",
@@ -40,20 +44,7 @@
       ]
     },
     {
-      "intent": "DialogPositionIntent",
-      "slots": [
-        {
-          "name": "Deck",
-          "type": "LIST_OF_DECKS"
-        },
-        {
-          "name": "POSITION",
-          "type": "LIST_OF_CARD_POSITIONS"
-        }
-      ]
-    },
-    {
-      "intent": "SupportedDecksIntent"
+      "intent": "AvailableDecksIntent"
     },
     {
       "intent": "AMAZON.HelpIntent"
