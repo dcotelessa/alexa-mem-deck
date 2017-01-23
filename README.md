@@ -1,4 +1,4 @@
-# Stacked Deck
+# MemDeck
 ## An Alexa-powered trainer for learning an order of playing cards.
 
 This app should:
