@@ -11,35 +11,35 @@
  /**
  * App ID for the skill
  */
-var APP_ID = ''; //replace with 'amzn1.echo-sdk-ams.app.[your-unique-value-here]';
+var APP_ID = 'amzn1.ask.skill.c2d3ff33-17e2-4606-9f2a-2026785dfd99'; //replace with 'amzn1.echo-sdk-ams.app.[your-unique-value-here]';
 
 /**
  * The AlexaSkill prototype and helper functions
  */
 var AlexaSkill = require('./AlexaSkill');
 
-var StackedDeck = function () {
+var MemDeck = function () {
     AlexaSkill.call(this, APP_ID);
 };
 
 // Extend AlexaSkill
-StackedDeck.prototype = Object.create(AlexaSkill.prototype);
-StackedDeck.prototype.constructor = StackedDeck;
+MemDeck.prototype = Object.create(AlexaSkill.prototype);
+MemDeck.prototype.constructor = MemDeck;
 
 // ----------------------- Override AlexaSkill request and intent handlers -----------------------
 
-StackedDeck.prototype.eventHandlers.onSessionStarted = function (sessionStartedRequest, session) {
+MemDeck.prototype.eventHandlers.onSessionStarted = function (sessionStartedRequest, session) {
     console.log("onSessionStarted requestId: " + sessionStartedRequest.requestId
         + ", sessionId: " + session.sessionId);
     // any initialization logic goes here
 };
 
-StackedDeck.prototype.eventHandlers.onLaunch = function (launchRequest, session, response) {
+MemDeck.prototype.eventHandlers.onLaunch = function (launchRequest, session, response) {
     console.log("onLaunch requestId: " + launchRequest.requestId + ", sessionId: " + session.sessionId);
     handleWelcomeRequest(response);
 };
 
-StackedDeck.prototype.eventHandlers.onSessionEnded = function (sessionEndedRequest, session) {
+MemDeck.prototype.eventHandlers.onSessionEnded = function (sessionEndedRequest, session) {
     console.log("onSessionEnded requestId: " + sessionEndedRequest.requestId
         + ", sessionId: " + session.sessionId);
     // any cleanup logic goes here
@@ -48,7 +48,7 @@ StackedDeck.prototype.eventHandlers.onSessionEnded = function (sessionEndedReque
 /**
  * override intentHandlers to map intent handling functions.
  */
-StackedDeck.prototype.intentHandlers = {
+MemDeck.prototype.intentHandlers = {
     "OneshotCardIntent": function (intent, session, response) {
         handleOneshotCardRequest(intent, session, response);
     },
@@ -94,7 +94,7 @@ StackedDeck.prototype.intentHandlers = {
     }
 };
 
-// -------------------------- Stacked Deck Domain Specific Business Logic --------------------------
+// -------------------------- MemDeck Domain Specific Business Logic --------------------------
 
 // set decks
 var DECKS = {
@@ -158,58 +158,58 @@ var DECKS = {
     'tamariz': {
       name:"Tamariz",
       order:[
-        "ace of clubs",
-        "two of clubs",
-        "three of clubs",
         "four of clubs",
-        "five of clubs",
-        "six of clubs",
-        "seven of clubs",
-        "eight of clubs",
-        "nine of clubs",
-        "ten of clubs",
-        "jack of clubs",
-        "queen of clubs",
-        "king of clubs",
-        "ace of hearts",
         "two of hearts",
-        "three of hearts",
-        "four of hearts",
-        "five of hearts",
-        "six of hearts",
-        "seven of hearts",
-        "eight of hearts",
-        "nine of hearts",
-        "ten of hearts",
-        "jack of hearts",
-        "queen of hearts",
-        "king of hearts",
-        "ace of diamonds",
-        "two of diamonds",
-        "three of diamonds",
-        "four of diamonds",
-        "five of diamonds",
-        "six of diamonds",
         "seven of diamonds",
-        "eight of diamonds",
-        "nine of diamonds",
-        "ten of diamonds",
-        "jack of diamonds",
-        "queen of diamonds",
-        "king of diamonds",
+        "three of clubs",
+        "four of hearts",
+        "six of diamonds",
         "ace of spades",
-        "two of spades",
-        "three of spades",
-        "four of spades",
-        "five of spades",
-        "six of spades",
-        "seven of spades",
-        "eight of spades",
+        "five of hearts",
         "nine of spades",
+        "two of spades",
+        "queen of hearts",
+        "three of diamonds",
+        "queen of clubs",
+        "eight of hearts",
+        "six of spades",
+        "five of spades",
+        "nine of hearts",
+        "king of clubs",
+        "two of diamonds",
+        "jack of hearts",
+        "three of spades",
+        "eight of spades",
+        "six of hearts",
+        "ten of clubs",
+        "five of diamonds",
+        "king of diamonds",
+        "two of clubs",
+        "three of hearts",
+        "eight of diamonds",
+        "five of clubs",
+        "king of spades",
+        "jack of diamonds",
+        "eight of clubs",
         "ten of spades",
+        "king of hearts",
+        "jack of clubs",
+        "seven of spades",
+        "ten of hearts",
+        "ace of diamonds",
+        "four of spades",
+        "seven of hearts",
+        "four of diamonds",
+        "ace of clubs",
+        "nine of clubs",
         "jack of spades",
+        "queen of diamonds",
+        "seven of clubs",
         "queen of spades",
-        "king of spades"
+        "ten of diamonds",
+        "six of clubs",
+        "ace of hearts",
+        "nine of diamonds"
       ]
     },
     'aronson': {
@@ -331,7 +331,7 @@ var DECKS = {
 function handleWelcomeRequest(response) {
     var whichDeckPrompt = "Which deck do we want to use?",
         speechOutput = {
-            speech: "Welcome to the Stacked Deck Trainer."
+            speech: "Welcome to the MemDeck Trainer."
                 + whichDeckPrompt,
             type: AlexaSkill.speechOutputType.PLAIN_TEXT
         },
@@ -339,10 +339,10 @@ function handleWelcomeRequest(response) {
             speech: "Once you tell me what stack we will be using, "
                 + "you can ask for the position of specific card in the deck "
                 + "or the name of card at a specific position. "
-                + "Also, you can simply open Stacked Deck and ask a question like, "
+                + "Also, you can simply open MemDeck and ask a question like, "
                 + "where is the Ace of Hearts in a Tamariz stack? "
                 + "or, name the card at the twenty-seventh position."
-                + "For a list of currently available stacked decks, ask what decks are available. "
+                + "For a list of currently available decks, ask what decks are available. "
                 + whichDeckPrompt,
             type: AlexaSkill.speechOutputType.PLAIN_TEXT
         };
@@ -354,11 +354,11 @@ function handleHelpRequest(response) {
     var repromptText = "Which deck do we want to use?",
         speechOutput = "You can ask for the position of specific card "
             + "or the name of card at a specific position"
-            + "from one of the stacked decks"
-            + "or you can simply open Stacked Deck and ask a question like, "
+            + "from one of the decks"
+            + "or you can simply open MemDeck and ask a question like, "
             + "where is the Ace of Hearts in a Tamariz deck? "
             + "or, name the card at the twenty-seventh position."
-            + "For a list of currently available stacked decks, ask what decks are available. "
+            + "For a list of currently available decks, ask what decks are available. "
             + "Or you can say exit. "
             + repromptText;
 
@@ -371,7 +371,7 @@ function handleHelpRequest(response) {
 function handleAvailableDecksRequest(intent, session, response) {
     // get decks re-prompt
     var repromptText = "Which deck do we want to use?",
-        speechOutput = "Currently, I know the order of these stacked decks: " + getAllDecksText()
+        speechOutput = "Currently, I know the order of these decks: " + getAllDecksText()
             + ". "+ repromptText;
 
     response.ask(speechOutput, repromptText);
@@ -386,7 +386,7 @@ function handleDeckDialogRequest(intent, session, response) {
         repromptText,
         speechOutput;
     if (deck.error) {
-        repromptText = "Currently, I know the order of these stacked decks: " + getAllDecksText()
+        repromptText = "Currently, I know the order of these decks: " + getAllDecksText()
             + ". Which deck do we want to use?";
         // if we received a value for the incorrect deck, repeat it to the user, otherwise we received an empty slot
         speechOutput = "I'm sorry, I don't know that stack. " + repromptText;
@@ -495,7 +495,7 @@ function handleNoSlotDialogRequest(intent, session, response) {
 
 /**
  * This handles a one-shot interaction, where the user utters a phrase like:
- * 'Alexa, open Stacked Deck and get card for the Tamariz'.
+ * 'Alexa, open MemDeck and get card for the Tamariz'.
  * If there is an error in a slot, this will guide the user to the dialog approach.
  */
 function handleOneshotCardRequest(intent, session, response) {
@@ -506,7 +506,7 @@ function handleOneshotCardRequest(intent, session, response) {
         speechOutput;
     if (deck.error) {
         // invalid deck. move to the dialog
-        repromptText = "Currently, I know the order of these stacked decks: " + getAllDecksText()
+        repromptText = "Currently, I know the order of these decks: " + getAllDecksText()
             + ". Which deck do we want to use?";
         // if we received a value for the incorrect deck, repeat it to the user, otherwise we received an empty slot
         speechOutput = "I'm sorry, I don't know that stack. " + repromptText;
@@ -534,7 +534,7 @@ function handleOneshotCardRequest(intent, session, response) {
 
 /**
  * This handles the one-shot interaction, where the user utters a phrase like:
- * 'Alexa, open Stacked Deck and get card for the Tamariz'.
+ * 'Alexa, open MemDeck and get card for the Tamariz'.
  * If there is an error in a slot, this will guide the user to the dialog approach.
  */
 function handleOneshotPositionRequest(intent, session, response) {
@@ -545,7 +545,7 @@ function handleOneshotPositionRequest(intent, session, response) {
         speechOutput;
     if (deck.error) {
         // invalid deck. move to the dialog
-        repromptText = "Currently, I know the order of these stacked decks: " + getAllDecksText()
+        repromptText = "Currently, I know the order of these decks: " + getAllDecksText()
             + ". Which deck do we want to use?";
         // if we received a value for the incorrect deck, repeat it to the user, otherwise we received an empty slot
         speechOutput = "I'm sorry, I don't know that stack. " + repromptText;
@@ -580,7 +580,7 @@ function getFinalCardResponse(deck, card, response) {
         speechOutput = "The " + card.name + " is at the " + cardPos + " position in the "
             + deck.name + " stack. ";
 
-    response.tellWithCard(speechOutput, "StackedDeck", speechOutput);
+    response.tellWithCard(speechOutput, "MemDeck", speechOutput);
 }
 
 /**
@@ -592,7 +592,7 @@ function getFinalPositionResponse(deck, position, response) {
         speechOutput = "The " + deck.order[position.name] + " is at the " + cardPos + " position in the "
             + deck.name + " stack. ";
 
-    response.tellWithCard(speechOutput, "StackedDeck", speechOutput);
+    response.tellWithCard(speechOutput, "MemDeck", speechOutput);
 }
 
 /**
@@ -714,6 +714,6 @@ function getAllDecksText() {
 
 // Create the handler that responds to the Alexa Request.
 exports.handler = function (event, context) {
-    var stackedDeck = new StackedDeck();
-    stackedDeck.execute(event, context);
+    var MemDeck = new MemDeck();
+    MemDeck.execute(event, context);
 };
